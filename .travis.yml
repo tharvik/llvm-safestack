@@ -1,0 +1,19 @@
+language: cpp
+
+sudo: false
+
+compiler:
+        - clang
+        - gcc
+
+before_install:
+        - wget http://www.cmake.org/files/v3.3/cmake-3.3.1.tar.gz
+        - tar xf cmake-*.tar.gz
+        - cd cmake-*/
+        - ./bootstrap --parallel=2 --prefix=root > /dev/null
+        - make
+        - make install
+        - export PATH="${PWD}/root/bin:${PATH}"
+        - cd ..
+
+script: ./build-llvm-with-safestack.sh -j2
