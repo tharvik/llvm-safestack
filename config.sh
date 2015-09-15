@@ -9,6 +9,7 @@ if [ "${#}" -gt 1 ]
 then
 	tmp="${@}"
 else
-	tmp="-j$(($(cat /proc/cpuinfo|wc -l) / 27))"
+	tmp=$(($(cat /proc/cpuinfo|wc -l) / 27))
+	tmp="-j${tmp} -l$((${tmp} * 2))"
 fi
 readonly MAKE_COMMON="${tmp}"
