@@ -5,7 +5,7 @@ set -eux
 readonly GIT_CLONE_COMMON='--depth=1'
 readonly CMAKE_COMMON='-DLLVM_OPTIMIZED_TABLEGEN=ON'
 
-if [ "${#}" -gt 1 ]
+if [ "${#}" -gt 0 ]
 then
 	tmp="${@}"
 else

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-script="${0%/*}"
-
-"${script}/sanitize" "${script}/clang++" "${@}"

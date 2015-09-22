@@ -1,6 +1,0 @@
-#!/bin/sh
-
-bin="${1}"
-shift
-
-"${bin}" -fsanitize=safe-stack "${@}"
