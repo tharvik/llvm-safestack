@@ -16,7 +16,7 @@ readonly LLVM_STAMP='llvm/done_building'
 
 if [ ! -e "${LLVM_STAMP}" ]
 then
-	git clone ${GIT_CLONE_COMMON} https://github.com/llvm-mirror/llvm.git
+	git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/llvm.git"
 	cd llvm
 
 	cd tools
@@ -24,7 +24,7 @@ then
 	cd ..
 
 	cd projects
-	git clone ${GIT_CLONE_COMMON} https://github.com/llvm-mirror/compiler-rt.git
+	git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/compiler-rt.git"
 	git clone ${git_clone_common} "${GIT_BASE_URL}/libcxx.git"
 	git clone ${git_clone_common} "${GIT_BASE_URL}/libcxxabi.git"
 	cd ..
