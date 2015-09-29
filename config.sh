@@ -10,6 +10,6 @@ then
 	tmp="${@}"
 else
 	tmp=$(($(cat /proc/cpuinfo|wc -l) / 27))
-	tmp="-j${tmp} -l$((${tmp} * 2))"
+	tmp="-l${tmp} -j$((${tmp} * 2))"
 fi
 readonly MAKE_COMMON="${tmp}"

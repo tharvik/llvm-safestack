@@ -12,38 +12,34 @@ readonly ROOT_DIR="${PWD}"
 readonly INSTALL_ROOT="${ROOT_DIR}/llvm/build/${CMAKE_INSTALL_PREFIX}"
 git_clone_common="${GIT_CLONE_COMMON} --branch ${GIT_BRANCH}"
 
-readonly LLVM_STAMP='llvm/done_building'
+# setup
+git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/llvm.git"
+cd llvm
 
-if [ ! -e "${LLVM_STAMP}" ]
-then
-	git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/llvm.git"
-	cd llvm
+cd tools
+git clone ${git_clone_common} "${GIT_BASE_URL}/clang.git"
+cd ..
 
-	cd tools
-	git clone ${git_clone_common} "${GIT_BASE_URL}/clang.git"
-	cd ..
+cd projects
+git clone ${git_clone_common} "${GIT_BASE_URL}/compiler-rt.git"
+git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/libcxx.git"
+git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/libcxxabi.git"
+cd ..
 
-	cd projects
-	git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/compiler-rt.git"
-	git clone ${git_clone_common} "${GIT_BASE_URL}/libcxx.git"
-	git clone ${git_clone_common} "${GIT_BASE_URL}/libcxxabi.git"
-	cd ..
+mkdir build
+cd ..
 
-	mkdir build
-	cd ..
+rsync -a --del llvm/ "${LLVM_RECOMPILE_SRC}"
 
-	rsync -a --del llvm/ "${LLVM_RECOMPILE_SRC}"
+# first build
+cd llvm/build
+cmake	${CMAKE_COMMON}						\
+	-DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}" ..
+make ${MAKE_COMMON}
+make ${MAKE_COMMON} install
+cd ../..
 
-	cd llvm/build
-	cmake	${CMAKE_COMMON}						\
-		-DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}" ..
-	make ${MAKE_COMMON}
-	make ${MAKE_COMMON} install
-	cd ../..
-
-	touch "${LLVM_STAMP}"
-fi
-
+# second build
 cd "${LLVM_RECOMPILE_SRC}/build"
 cmake	${CMAKE_COMMON}						\
 	-DCMAKE_CXX_FLAGS='-fsanitize=safe-stack'		\
