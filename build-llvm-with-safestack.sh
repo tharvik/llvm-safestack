@@ -13,7 +13,7 @@ readonly INSTALL_ROOT="${ROOT_DIR}/llvm/build/${CMAKE_INSTALL_PREFIX}"
 git_clone_common="${GIT_CLONE_COMMON} --branch ${GIT_BRANCH}"
 
 # setup
-git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/llvm.git"
+git clone ${git_clone_common} "${GIT_BASE_URL}/llvm.git"
 cd llvm
 
 cd tools
@@ -23,7 +23,7 @@ cd ..
 cd projects
 git clone ${git_clone_common} "${GIT_BASE_URL}/compiler-rt.git"
 git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/libcxx.git"
-git clone ${GIT_CLONE_COMMON} "${GIT_BASE_URL}/libcxxabi.git"
+git clone ${git_clone_common} "${GIT_BASE_URL}/libcxxabi.git"
 cd ..
 
 mkdir build
@@ -42,7 +42,7 @@ cd ../..
 # second build
 cd "${LLVM_RECOMPILE_SRC}/build"
 cmake	${CMAKE_COMMON}						\
-	-DCMAKE_CXX_FLAGS='-fsanitize=safe-stack'		\
+	-DLLVM_USE_SANITIZER='Safestack'			\
 	-DCMAKE_C_COMPILER="${INSTALL_ROOT}/bin/clang"		\
 	-DCMAKE_CXX_COMPILER="${INSTALL_ROOT}/bin/clang++" ..
 make ${MAKE_COMMON}
