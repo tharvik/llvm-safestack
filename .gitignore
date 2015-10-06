@@ -1,3 +1,2 @@
 *.sw?
-/llvm
-/llvm-self
+/llvm*/

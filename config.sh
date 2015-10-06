@@ -2,7 +2,7 @@
 
 set -eux
 
-readonly GIT_CLONE_COMMON='--depth=1 --no-single-branch'
+readonly GIT_CLONE_COMMON='--depth=2 --no-single-branch'
 readonly CMAKE_COMMON='-DLLVM_OPTIMIZED_TABLEGEN=ON'
 
 if [ "${#}" -gt 0 ]
